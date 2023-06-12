@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,99 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.pizzaHome {
+  position: relative;
+  background-image: url(../Assets/Pizza.jpg);
+  background-size: cover;
+  height: 30rem;
+  color:rgb(0, 0, 0);
+  font-size: x-large;
+}
+
+.formhead {
+  position: relative;
+  background-image: url(../Assets/pizzacats.jpg);
+  background-size: cover;
+  display: flexbox;
+  justify-content: space-around;
+
+  height: 30rem;
+  width: 80rem;
+  color:rgb(0, 0, 0);
+  font-size: x-large;
+}
+
+
+.foodchoices {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+.discrip {
+  line-height: 1.3;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+
+}
+
+.orderbuttons {
+  display: flex;
+  justify-content: center;
+
+}
+
+.mainbutton {
+  width: 8rem;
+  height: 4rem;
+  background-color: gold;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
+}
+
+
+
+.DDB {
+  position: relative;
+  background-image: url(../Assets/dogburger.jpg);
+  background-size: cover;
+  width: 20rem;
+  height: 12rem;
+  border-radius: 40px;
+  
+}
+
+.DC {
+  position: relative;
+  background-image: url(../Assets/DunkinCat.jpg);
+  background-size: 75% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 20rem;
+  height: 12rem;
+  border-radius: 40px;
+}
+
+.CW {
+  position: relative;
+  background-image: url(../Assets/catcream.jpg);
+  background-size: cover;
+  width: 20rem;
+  height: 12rem;
+  border-radius: 40px;
+}
+
+.MDD {
+  position: relative;
+  background-image: url(../Assets/McDogg.png);
+  background-size: cover;
+  width: 20rem;
+  height: 12rem;
+  border-radius: 40px;
 }
