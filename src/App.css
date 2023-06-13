@@ -47,12 +47,10 @@
 }
 
 .formhead {
+  display: flexbox;
   position: relative;
   background-image: url(../Assets/pizzacats.jpg);
   background-size: cover;
-  display: flexbox;
-  justify-content: space-around;
-
   height: 30rem;
   width: 80rem;
   color:rgb(0, 0, 0);
