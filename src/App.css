@@ -129,3 +129,30 @@
   height: 12rem;
   border-radius: 40px;
 }
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding-left: 25rem;
+  padding-right: 20rem;
+  font-size: larger;
+  font-weight: 800;
+  background-color: burlywood;
+
+}
+
+.formTwo {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: max-content;
+  padding-left: 25rem;
+  padding-right: 20rem;
+  font-size: larger;
+  font-weight: 800;
+  background-color: burlywood;
+  
+
+}
