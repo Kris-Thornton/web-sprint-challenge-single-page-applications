@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate} from "react-router-dom";
-
+import * as Yup from 'yup'
 
 const baseStyle = { display: 'flex', justifyContent: 'center', paddingTop: '20rem', color: 'gold' }
 
 
-
+// _______________________________________________________
 const PizzaForm = (props) => {
-    const sizeAndSauce = {
+    const sizes = {
         small: '', 
         medium: '', 
         large: '', 
         extraLarge: '', 
-        gigantic: '', 
-        original: '', 
+        gigantic: ''
+    }    
+    const sauces = {        
+        original: "", 
         garlic: '', 
         bbq: '', 
         spinach: '',
-        extra: '' 
+        extra: ''
     };    
 
     const toppings = {
@@ -39,15 +41,19 @@ const PizzaForm = (props) => {
 
 
     const [howMany, setHowMany] = useState(1);
-    const [sAndS, setSandS] = useState(sizeAndSauce);
+    const [sAndS, setSandS] = useState(sizes);
     const [topps, setTopps] = useState(toppings);
-    const [isChecked, setIsChecked] = useState(false);
+    const [crusts, setCrusts] = useState(sauces.original)
+    const [errors, setErrors] = useState({
+        sizes: ''
+    })
+    // const [isChecked, setIsChecked] = useState(false);
     const navigate = useNavigate()
     // _________________________________________________________
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-
+    
 
     }
 
@@ -55,13 +61,60 @@ const PizzaForm = (props) => {
 
 
     const handleChange = (evt) => {
-        const { type, name, value, checked } = evt.target
-        const updatedInfo = type === 'checkbox' ? checked : value;
-        setIsChecked(evt.target.checked)
+        const {name, type, value, checked} = evt.target;
+        
+        setSandS(evt.target.value);
+        
+        const allToppings = type === 'checkbox' ? checked : value;
+        setTopps({...topps, [name]: allToppings});
 
+        
         console.log('working')
-        setSandS({...sAndS, [value]: updatedInfo})
+        const allCrusts = type === 'radio' ? evt.target: value;
+        setCrusts({...crusts, [value]: allCrusts});
+
+// Yup
+//         .reach(formSchema, name)
+//         .validate(value)
+//         .then(valid => {
+//             setErrors({
+//                 ...errors, [name]: ''
+//             });
+//         })
+//         .catch(err => {
+//             setErrors({
+//                 ...errors, [name]: err.errors[0]
+//             });
+//         });
+
+//         setSandS({
+//             ...sAndS, [name]: value
+//         });
+
     }
+// _____________________________________________________________
+
+// const formSchema = Yup.object().shape({
+//     sizes: Yup
+//         .string()
+//         .option('You must choose one option please')
+//         .required('What size would you like')
+// })
+// _____________________________________________________________
+
+// useEffect(() => {
+//     formSchema.isValid(sAndS).then(valid => {
+        
+//     })
+// })
+
+
+// _____________________________________________________________
+
+
+
+
+// _____________________________________________________________
 
     const incrementor = (evt) => {
         setHowMany(howMany + 1)
@@ -72,6 +125,9 @@ const PizzaForm = (props) => {
         setHowMany(howMany - 1)
 
     }
+
+
+// _____________________________________________________________
 
 
 
@@ -87,25 +143,26 @@ const PizzaForm = (props) => {
                 <h2>Build your Paw Paw Pizza Below</h2>
                 <div>
                     <h6>***Required***</h6>
+                    {errors.sizes}
                     <label>Choice of Size
-                        <select>
+                        <select value={sAndS.sizes} name='sizes' onChange={handleChange}>
                             <option>here!</option>
-                            <option name='small' value={sAndS.small} onChange={handleChange}>Small</option>
-                            <option name='medium' value={sAndS.medium} onChange={handleChange}>Medium</option>
-                            <option name='large' value={sAndS.large} onChange={handleChange}>Large</option>
-                            <option name='extraLarge' value={sAndS.extraLarge} onChange={handleChange}>Extra Large</option>
-                            <option name='gigantic' value={sAndS.gigantic} onChange={handleChange}>Gigantic</option>
+                            <option name='small' value="small" onChange={handleChange}>Small</option>
+                            <option name='medium' value="medium" onChange={handleChange}>Medium</option>
+                            <option name='large' value="large" onChange={handleChange}>Large</option>
+                            <option name='extraLarge' value="extraLarge" onChange={handleChange}>Extra Large</option>
+                            <option name='gigantic' value="gigantic" onChange={handleChange}>Gigantic</option>
                         </select>
                     </label>
                 </div>
                 <br />
                 <div>
                     <h6>***Required***</h6>
-                    <label>Choice of Sauce<br /><br />
-                        <input type='radio' value={"original"} checked={true} />Original Crust
-                        <input type='radio' value={"garlic"} checked={true} />Garlic Crust
-                        <input type='radio' value={"bbq"} checked={true} />BBQ Sauce
-                        <input type='radio' value={"spinach"} checked={true} />Spinach Alfredo
+                    <label>Choice of Crust<br /><br />
+                        <input type='radio' name='crust' value="original" checked={crusts.crust === 'original'} onChange={handleChange} />Original Crust
+                        <input type='radio' name='crust' value="garlic" checked={crusts.crust === 'garlic'} onChange={handleChange} />Garlic Crust
+                        <input type='radio' name='crust' value="bbq" checked={crusts.crust === 'bbq'} onChange={handleChange} />BBQ Sauce
+                        <input type='radio' name='crust' value="spinach" checked={crusts.crust === 'spinach'} onChange={handleChange} />Spinach Alfredo
                     </label>
                 </div>
                 <br />
@@ -113,20 +170,20 @@ const PizzaForm = (props) => {
                     <label>Add Toppings <br />
                         Choose up to 10 <br /><br />
                         <div>
-                            <input type='checkbox' name='pepperoni' checked={isChecked.pepperoni} onChange={handleChange} />Pepperoni
-                            <input type='checkbox' name='sausage' checked={isChecked.sausage} onChange={handleChange} />Sausage
-                            <input type='checkbox' name='canadian' checked={isChecked.canadian} onChange={handleChange} />Canadian Bacon
-                            <input type='checkbox' name='spicyItalian' checked={isChecked.spicyItalian} onChange={handleChange} />Spicy Italian Sausage
-                            <input type='checkbox' name='grilled' checked={isChecked.grilled} onChange={handleChange} />Grilled Chicken
-                            <input type='checkbox' name='onions' checked={isChecked.onions} onChange={handleChange} />Onions
-                            <input type='checkbox' name='gPeppers' checked={isChecked.gPeppers} onChange={handleChange} />Green Peppers
-                            <input type='checkbox' name='dicedTomatoes' checked={isChecked.dicedTomatoes} onChange={handleChange} />Diced Tomatoes
-                            <input type='checkbox' name='bOlives' checked={isChecked.bOlives} onChange={handleChange} />Black Olives
-                            <input type='checkbox' name='roastedGarlic' checked={isChecked.roastedGarlic} onChange={handleChange} />Roasted Garlic
-                            <input type='checkbox' name='artichokeHearts' checked={isChecked.artichokeHearts} onChange={handleChange} />Artichoke Hearts
-                            <input type='checkbox' name='pineapple' checked={isChecked.pineapple} onChange={handleChange} />Pineapple
-                            <input type='checkbox' name='extraCheese' checked={isChecked.extraCheese} onChange={handleChange} />Extra Cheese
-                            <input type='checkbox' name='fetaCheese' checked={isChecked.fetaCheese} onChange={handleChange} />Feta Cheese
+                            <input type='checkbox' name='pepperoni' checked={sAndS.pepperoni} onChange={handleChange} />Pepperoni
+                            <input type='checkbox' name='sausage' checked={sAndS.sausage} onChange={handleChange} />Sausage
+                            <input type='checkbox' name='canadian' checked={sAndS.canadian} onChange={handleChange} />Canadian Bacon
+                            <input type='checkbox' name='spicyItalian' checked={sAndS.spicyItalian} onChange={handleChange} />Spicy Italian Sausage
+                            <input type='checkbox' name='grilled' checked={sAndS.grilled} onChange={handleChange} />Grilled Chicken
+                            <input type='checkbox' name='onions' checked={sAndS.onions} onChange={handleChange} />Onions
+                            <input type='checkbox' name='gPeppers' checked={sAndS.gPeppers} onChange={handleChange} />Green Peppers
+                            <input type='checkbox' name='dicedTomatoes' checked={sAndS.dicedTomatoes} onChange={handleChange} />Diced Tomatoes
+                            <input type='checkbox' name='bOlives' checked={sAndS.bOlives} onChange={handleChange} />Black Olives
+                            <input type='checkbox' name='roastedGarlic' checked={sAndS.roastedGarlic} onChange={handleChange} />Roasted Garlic
+                            <input type='checkbox' name='artichokeHearts' checked={sAndS.artichokeHearts} onChange={handleChange} />Artichoke Hearts
+                            <input type='checkbox' name='pineapple' checked={sAndS.pineapple} onChange={handleChange} />Pineapple
+                            <input type='checkbox' name='extraCheese' checked={sAndS.extraCheese} onChange={handleChange} />Extra Cheese
+                            <input type='checkbox' name='fetaCheese' checked={sAndS.fetaCheese} onChange={handleChange} />Feta Cheese
                         </div>
 
                     </label>
@@ -137,7 +194,7 @@ const PizzaForm = (props) => {
                 <div>
                     <label>
                         <h4>Special Instructions</h4>
-                        <input type='text' name='extra' value={topps.extra} placeholder="Anything you want to add?" onChange={handleChange}/>
+                        <input type='text' name='extra' value={sAndS.extra} placeholder="Anything you want to add?" onChange={handleChange}/>
                     </label>
                 </div>
                 <div>
@@ -145,7 +202,7 @@ const PizzaForm = (props) => {
                     <button name='add' value='add' onClick={incrementor}>+</button>
                     <button name='minus' value='minus' onClick={deincrementor}>-</button>
                     <br /><br />
-                    <button onClick={() => navigate('/Confirmation')} >Add to Order!</button>
+                    <button onClick={() => navigate('/Confirmation') } >Add to Order!</button>
                 </div>
             </form>
         </>

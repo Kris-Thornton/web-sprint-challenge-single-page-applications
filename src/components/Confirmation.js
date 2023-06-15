@@ -13,7 +13,9 @@ const Confirmation = (props) => {
         <div className="formTwo">
             <h1>Congratulations!</h1>
             <h2>Your order has been placed!</h2>
-            
+            <div>
+                <list>{props.howMany}</list>
+            </div>
         </div>
         
         </>
@@ -21,3 +23,10 @@ const Confirmation = (props) => {
 }
 
 export default Confirmation;
+
+
+
+// const [howMany, setHowMany] = useState(1);
+// const [sAndS, setSandS] = useState(sizes);
+// const [topps, setTopps] = useState(toppings);
+// const [crusts, setCrusts] = useState({crust:""})
