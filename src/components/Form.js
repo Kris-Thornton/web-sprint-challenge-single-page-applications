@@ -26,6 +26,7 @@ const PizzaForm = (props) => {
                 <div>
 
                     <h6>***Required***</h6>
+
                     {/* ???????????????????????????? */}
                     <p>{errors.size}</p>
                     {/* ???????????????????????????? */}
@@ -78,7 +79,7 @@ const PizzaForm = (props) => {
                     </label>
                 </div>
                 <div>
-                    {/* <input type="checkbox" />Gluten Free Crust for $3.00 */}
+                    <input type="checkbox" />Gluten Free Crust for $3.00
                 </div>
                 <div>
                     <label>

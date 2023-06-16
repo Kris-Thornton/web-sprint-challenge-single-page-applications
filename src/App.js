@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import "./index.css";
+import axios from 'axios'
 import './App.css'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Homepage from './components/Homepage';
@@ -40,32 +41,36 @@ const [quantity, setQuantity] = useState(1);
 const [errors, setErrors] = useState({
     size: ''
 })
-// const [isChecked, setIsChecked] = useState(false);
+
 // _________________________________________________________
 
 const handleSubmit = (evt) => {
     evt.preventDefault();
     // TODO finish
+    console.log('submitted')
+    
 
+    axios
+    .post('`https://reqres.in/api/orders`')
+    .then((res => {
+      console.log(res.data);
+    }))
+    .catch(err => {
+      console.log(err);
+    })
 }
 
+
 // _________________________________________________________
-console.log(formValues.quantity, "HERHEfja;slkdfjas;")
+
 
 const handleChange = (evt) => {
     const { name, type, value, checked } = evt.target;
 
-    // setSandS(evt.target.value);
+    
 
     const correctValue = type === 'checkbox' ? checked : value;
-    console.log("FIRED", correctValue)
-    // setTopps({...topps, [name]: allToppings});
-
-
-    console.log('working')
-    // const allCrusts = type === 'radio' ? evt.target: value;
-    // setCrusts({...crusts, [value]: allCrusts});
-
+  
     Yup
         .reach(formSchema, name)
         .validate(correctValue)
@@ -116,6 +121,8 @@ const formSchema = Yup.object().shape({
     specialInstructions: Yup.string(),
     quantity: Yup.number()
 });
+
+
 
 
 
