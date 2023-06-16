@@ -7,3 +7,11 @@ module.exports = defineConfig({
     },
   },
 });
+
+
+
+// describe('template spec', () => {
+//   it('passes', () => {
+//     cy.visit('https://example.cypress.io')
+//   })
+// })
